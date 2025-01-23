@@ -1,0 +1,45 @@
+ buildings:
+      - name: BLD1
+        parent_name: 'Global/USA/New York'
+        address: "New York, USA"
+        latitude: 40.71
+        longitude: 74.00
+        country: ""
+      - name: BLD2
+        parent_name: 'Global/USA/New York'
+        address: "New York, USA"
+        latitude: 40.71
+        longitude: 74.00
+        country: ""
+      - name: BLD1
+        parent_name: 'Global/USA/San Jose'
+        address: "San Jose, USA"
+        latitude: 37.33
+        longitude: 121.88
+        country: ""
+      - name: BLD2
+        parent_name: 'Global/USA/San Jose'
+        address: "San Jose, USA"
+        latitude: 37.33
+        longitude: 121.88
+        country: ""
+      
+    
+      # - name: BLD3
+      #   parent_name: 'Global/India/Uttar Pradesh/Noida'
+      #   address: "Noida, Uttar Pradesh, India"
+      #   latitude: 28.535519
+      #   longitude: 77.391031
+      #   country: "India"
+      # - name: BLD4
+      #   parent_name: 'Global/India/Uttar Pradesh/Noida'
+      #   address: "Noida, Uttar Pradesh, India"
+      #   latitude: 28.535520
+      #   longitude: 77.391032
+      #   country: "India"
+      # - name: BLD5
+      #   parent_name: 'Global/India/Uttar Pradesh/Noida'
+      #   address: "Noida, Uttar Pradesh, India"
+      #   latitude: 28.535521
+      #   longitude: 77.391033
+      #   country: "India"
