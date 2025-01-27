@@ -2329,7 +2329,6 @@ class Site(DnacBase):
             self.log("""Mismatch between the playbook input for site '{0}' and the Cisco Catalyst Center indicates that
                     the deletion was not executed successfully.""".format(self.want.get("site_name_hierarchy")), "INFO")
             return self
-
     def update_site_messages(self):
         """
         Update site messages based on the status of created, updated, and deleted sites.

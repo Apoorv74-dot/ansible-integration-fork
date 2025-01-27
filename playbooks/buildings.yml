@@ -1,13 +1,13 @@
  buildings:
-      - name: BLD1
-        parent_name: 'Global/USA/New York'
-        address: "New York, USA"
+      - name: Palace1
+        parent_name: 'Global/India/Mysore'
+        address: "India,Mysore"
         latitude: 40.71
         longitude: 74.00
         country: ""
-      - name: BLD2
-        parent_name: 'Global/USA/New York'
-        address: "New York, USA"
+      - name: Palace2
+        parent_name: 'Global/India/Mysore'
+        address: "India,Mysore"
         latitude: 40.71
         longitude: 74.00
         country: ""

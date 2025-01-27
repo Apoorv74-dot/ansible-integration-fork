@@ -18,22 +18,23 @@
         config_verify: True
         state: merged
         config:
-          # - site:
-          #     floor:
-          #       name: Test_Floor6
-          #       parent_name: 'Global/USA/San Francisco/BGL_18'
-          #       length: 103.23
-          #       width: 75.1
-          #       height: 50.22
-          #       rf_model: 'Cubes And Walled Offices'
-          #       floor_number: 3
-          #   site_type: floor
           - site:
               area:
-                name: Abc
+                name: "India"
                 parent_name: 'Global'
-                address: Bengaluru, Karnataka, India
-                latitude: 22.2111
-                longitude: -42.1234434
-                country: "United States"
             site_type: area
+          - site:
+              area:
+                name: "Mysore"
+                parent_name: 'Global/India'
+            site_type: area
+          - site:
+              building:
+                name: Palace1
+                parent_name: "Global/India/Mysore"
+                address: "Mysore ,India"
+                latitude: 45.5
+                longitude: 56.6
+                country: ""
+            site_type: building
+          

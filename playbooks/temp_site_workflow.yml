@@ -21,13 +21,13 @@
         config:
           - site:
               area:
-                name: "USA"
+                name: "India"
                 parent_name: 'Global'
             site_type: area
           - site:
               area:
-                name: "New York"
-                parent_name: 'Global/USA'
+                name: "Mysore"
+                parent_name: 'Global/India'
             site_type: area
           - site:
               building:
@@ -52,6 +52,6 @@
             site_type: floor
       with_nested:
         - "{{ buildings }}"
-        - "{{ range(1, 2) | list }}"  # 5 floors for New York
+        - "{{ range(1, 4) | list }}"  # 5 floors for New York
       when: 
-        - "'USA/New York' in item.0.parent_name"  # Ensure this matches the condition for New York
+        - "'India/Mysore' in item.0.parent_name"  # Ensure this matches the condition for New York

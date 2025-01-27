@@ -4176,7 +4176,6 @@ class NetworkSettings(DnacBase):
                 network_management_index += 1
 
             self.result.get("response")[2].get("network").update({"Validation": "Success"})
-
         self.msg = "Successfully validated the Global Pool, Reserve Pool and the Network Functions."
         self.status = "success"
         return self
