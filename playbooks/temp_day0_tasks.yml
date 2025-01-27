@@ -1,19 +1,84 @@
+#creating the sites
+# - hosts: localhost
+#   connection: local
+#   gather_facts: no
+#   vars_files:
+#     - "credentials.yml"
+#     - "buildings.yml"
+#   tasks:
+#     - name: Get site info and update site details for New York (5 floors)
+#       cisco.dnac.site_workflow_manager:
+#         dnac_host: "{{dnac_host}}"
+#         dnac_username: "{{dnac_username}}"
+#         dnac_password: "{{dnac_password}}"
+#         dnac_verify: "{{dnac_verify}}"
+#         dnac_port: "{{dnac_port}}"
+#         dnac_version: "{{dnac_version}}"
+#         dnac_debug: "{{dnac_debug}}"
+#         dnac_log: True
+#         dnac_log_level: DEBUG
+#         config_verify: True
+#         state: merged
+#         config:
+#           - site:
+#               area:
+#                 name: "India"
+#                 parent_name: 'Global'
+#             site_type: area
+#           - site:
+#               area:
+#                 name: "Mysore"
+#                 parent_name: 'Global/India'
+#             site_type: area
+#           - site:
+#               building:
+#                 name: "{{ item.0.name }}"
+#                 parent_name: "{{ item.0.parent_name }}"
+#                 address: "{{ item.0.address }}"
+#                 latitude: "{{ item.0.latitude }}"
+#                 longitude: "{{ item.0.longitude }}"
+#                 country: "{{ item.0.country }}"
+#             site_type: building
+#           # Adding 5 floors for New York
+#           - site:
+#               floor:
+#                 name: "Floor_{{ item.1 }}"
+#                 parent_name: "{{ item.0.parent_name }}/{{ item.0.name }}"
+#                 length: 103.23
+#                 width: 75.1
+#                 height: 50.22
+#                 rf_model: 'Cubes And Walled Offices'
+#                 floor_number: "{{ item.1 }}"
+#                 units_of_measure: "feet"
+#             site_type: floor
+#       with_nested:
+#         - "{{ buildings }}"
+#         - "{{ range(1, 4) | list }}"  # 5 floors for New York
+#       when: 
+#         - "'India/Mysore' in item.0.parent_name"  # Ensure this matches the condition for New York
+
+
 - hosts: localhost
   vars_files:
     - credentials.yml
   gather_facts: no
   connection: local
+  vars:
+    dnac_login: &dnac_login
+      dnac_host: "{{ dnac_host }}"
+      dnac_username: "{{ dnac_username }}"
+      dnac_password: "{{ dnac_password }}"
+      dnac_verify: "{{ dnac_verify }}"
+      dnac_port: "{{ dnac_port }}"
+      dnac_version: "{{ dnac_version }}"
+      dnac_debug: "{{ dnac_debug }}"
+      dnac_log_level: "DEBUG"
+      dnac_log_append: True
   tasks:
   #assigning device creds
     - name: Create global device credentials.
       cisco.dnac.device_credential_workflow_manager:
-        dnac_host: "{{ dnac_host }}"
-        dnac_port: "{{ dnac_port }}"
-        dnac_username: "{{ dnac_username }}"
-        dnac_password: "{{ dnac_password }}"
-        dnac_verify: "{{ dnac_verify }}"
-        dnac_debug: "{{ dnac_debug }}"
-        dnac_version: "{{dnac_version}}"
+        <<: *dnac_login
         dnac_log: True
         state: merged
         config_verify: True
@@ -52,13 +117,7 @@
 
     - name: Assign global device credentials to a site.
       cisco.dnac.device_credential_workflow_manager:
-        dnac_host: "{{ dnac_host }}"
-        dnac_port: "{{ dnac_port }}"
-        dnac_username: "{{ dnac_username }}"
-        dnac_password: "{{ dnac_password }}"
-        dnac_verify: "{{ dnac_verify }}"
-        dnac_debug: "{{ dnac_debug }}"
-        dnac_version: "{{dnac_version}}"
+        <<: *dnac_login
         dnac_log: True
         state: merged
         config_verify: True
@@ -79,19 +138,14 @@
             site_name: #the creds will be assigned directly to all the child nodes so be careful
             - Global/USA/New York
             - Global/USA/San Jose
+
+
+
     #global ip_pool creation,assigning to sites
     - name: Create global pool, reserve subpool and network functions
       cisco.dnac.network_settings_workflow_manager:
-        dnac_host: "{{ dnac_host }}"
-        dnac_port: "{{ dnac_port }}"
-        dnac_username: "{{ dnac_username }}"
-        dnac_password: "{{ dnac_password }}"
-        dnac_verify: "{{ dnac_verify }}"
-        dnac_debug: "{{ dnac_debug }}"
-        dnac_version: "{{dnac_version}}"
+        <<: *dnac_login
         dnac_log: True
-        dnac_log_level: DEBUG
-        dnac_log_append: True
         # dnac_log_file_path: "{{ dnac_log_file_path }}"
         state: merged
         config_verify: True
@@ -113,6 +167,7 @@
                 gateway: '206.1.208.1' #use this for updating
                 dhcp_server_ips: [100.1.1.10] #use this for updating
                 dns_server_ips: [100.1.1.10] #use this for updating
+
           reserve_pool_details:
           - site_name: Global/USA/new york
             name: APPool_sub_206
@@ -136,25 +191,19 @@
             ipv4_gateway: 205.1.208.1
             ipv4_dns_servers: [100.1.1.10]
             ipv4_dhcp_servers: [100.1.1.10]
+
+
     #adding AAA,DHCP,Enabling telemetry
     - name: Create network functions
       cisco.dnac.network_settings_workflow_manager:
-        dnac_host: "{{ dnac_host }}"
-        dnac_port: "{{ dnac_port }}"
-        dnac_username: "{{ dnac_username }}"
-        dnac_password: "{{ dnac_password }}"
-        dnac_verify: "{{ dnac_verify }}"
-        dnac_debug: "{{ dnac_debug }}"
-        dnac_version: "{{dnac_version}}"
+        <<: *dnac_login
         dnac_log: True
-        dnac_log_level: DEBUG
-        dnac_log_append: True
         # dnac_log_file_path: "{{ dnac_log_file_path }}"
         state: merged
         config_verify: True
         config:
         - network_management_details:
-          - site_name: Global
+          - site_name: Global #the site where you want to add the servers
             settings:
               network_aaa:
                 server_type: ISE
@@ -169,3 +218,4 @@
               message_of_the_day:
                 banner_message: hello
                 retain_existing_banner: True
+
