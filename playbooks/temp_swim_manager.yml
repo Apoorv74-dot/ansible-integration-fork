@@ -1,0 +1,39 @@
+---
+- name: Configure device credentials on Cisco DNA Center
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - "credentials.yml"
+  tasks:
+    - name: Import an image, tag it as golden and load it on device
+      cisco.dnac.swim_workflow_manager:
+        dnac_host: "{{dnac_host}}"
+        dnac_username: "{{dnac_username}}"
+        dnac_password: "{{dnac_password}}"
+        dnac_verify: "{{dnac_verify}}"
+        dnac_port: "{{dnac_port}}"
+        dnac_version: "{{dnac_version}}"
+        dnac_debug: "{{dnac_debug}}"
+        dnac_log: True
+        dnac_log_level: DEBUG
+        config_verify: True
+        dnac_api_task_timeout: 1000
+        dnac_task_poll_interval: 1
+        config:
+        - import_image_details:
+            type: remote
+            url_details:
+                payload:
+                - source_url:
+                  - "http://10.197.156.97/apoorv/images/cat9k_iosxe.17.12.04prd4.SPA.bin"
+                  is_third_party: False
+          tagging_details:
+            image_name: cat9k_iosxe.17.12.04prd4.SPA.bin
+            device_role: ALL
+            device_image_family_name: Cisco Catalyst 9300 Switch
+            site_name: "Global/USA/New York/BLD1"
+            tagging: True
+          
+
+      
