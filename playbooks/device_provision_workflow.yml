@@ -3,9 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: no
-
   vars_files:
-    - "{{ CLUSTERFILE }}"
+    - "{{ CLUSTERFILE }}" 
 
   vars:
     dnac_login: &dnac_login

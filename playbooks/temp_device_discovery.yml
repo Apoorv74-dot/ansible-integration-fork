@@ -24,10 +24,10 @@
         state: merged
         config_verify: True
         config:
-            - discovery_name: Border1
+            - discovery_name: Border1_205
               discovery_type: SINGLE
               ip_address_list:
-                - 206.1.2.1
+                - 205.1.2.1
               global_credentials:
                 cli_credentials_list:
                     - description: WLC
@@ -49,35 +49,35 @@
               timeout: 3
         
 
-    - name: Execute discovery devices using MULTI RANGE with various global credentials
-      cisco.dnac.discovery_workflow_manager:
-        <<: *dnac_login
-        state: merged
-        config_verify: True
-        config:
-          - discovery_name: Multi_global_2
-            discovery_type: MULTI RANGE
-            ip_address_list:
-            - 206.1.2.3-206.1.2.4
-            global_credentials:
-              cli_credentials_list:
-                  - description: WLC
-                    username: netadmin
-              http_read_credential_list:
-                  - description: http_read
-                    username: wlcaccess
-              http_write_credential_list:
-                  - description: http_write
-                    username: wlcaccess
-              snmp_v3_credential_list:
-                  - description: SNMPv3-credentials
-                    username: v3Public
-              net_conf_port: 830
-            start_index: 1
-            records_to_return: 100
-            protocol_order: ssh
-            retry: 5
-            timeout: 3
+    # - name: Execute discovery devices using MULTI RANGE with various global credentials
+    #   cisco.dnac.discovery_workflow_manager:
+    #     <<: *dnac_login
+    #     state: merged
+    #     config_verify: True
+    #     config:
+    #       - discovery_name: Multi_global_2
+    #         discovery_type: MULTI RANGE
+    #         ip_address_list:
+    #         - 206.1.2.3-206.1.2.4
+    #         global_credentials:
+    #           cli_credentials_list:
+    #               - description: WLC
+    #                 username: netadmin
+    #           http_read_credential_list:
+    #               - description: http_read
+    #                 username: wlcaccess
+    #           http_write_credential_list:
+    #               - description: http_write
+    #                 username: wlcaccess
+    #           snmp_v3_credential_list:
+    #               - description: SNMPv3-credentials
+    #                 username: v3Public
+    #           net_conf_port: 830
+    #         start_index: 1
+    #         records_to_return: 100
+    #         protocol_order: ssh
+    #         retry: 5
+    #         timeout: 3
 
     # - name: Execute discovery of single device using various discovery specific credentials and all the global credentials
     #   cisco.dnac.discovery_workflow_manager:
