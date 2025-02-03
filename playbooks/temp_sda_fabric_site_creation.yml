@@ -1,0 +1,34 @@
+---
+- name: Configure fabric site/zones and authentication profile template in Cisco Catalyst Center
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - "credentials.yml"
+  tasks:
+    - name: Configure the fabric sites/zones and authentication profile template in Cisco Catalyst Center.
+      cisco.dnac.sda_fabric_sites_zones_workflow_manager:
+        dnac_host: "{{dnac_host}}"
+        dnac_username: "{{dnac_username}}"
+        dnac_password: "{{dnac_password}}"
+        dnac_verify: "{{dnac_verify}}"
+        dnac_port: "{{dnac_port}}"
+        dnac_version: "{{dnac_version}}"
+        dnac_debug: "{{dnac_debug}}"
+        dnac_log_level: DEBUG
+        dnac_log: true
+        config_verify: true
+        state: merged
+        config:
+        - fabric_sites:
+          - site_name_hierarchy: "Global/USA/New York"
+            fabric_type: "fabric_site"
+            authentication_profile: "No Authentication"
+            is_pub_sub_enabled: False
+
+          - site_name_hierarchy: "Global/USA/San Jose"
+            fabric_type: "fabric_site"
+            authentication_profile: "No Authentication"
+            is_pub_sub_enabled: False
+
+  
