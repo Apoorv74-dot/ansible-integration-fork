@@ -67,10 +67,27 @@
         config:
           - site_name_hierarchy: Global/USA/New York/BLD1
             management_ip_address: 206.1.2.3
-          #   provisioning: false
-          # - site_name_hierarchy: Global/USA/New York/BLD1
-          #   management_ip_address: 206.1.2.4
-          # - site_name_hierarchy: Global/USA/San Jose/BLD2
-          #   management_ip_address: 205.1.2.2
-            # provisoning: false
+          - site_name_hierarchy: Global/USA/New York/BLD1
+            management_ip_address: 206.1.2.4
+          - site_name_hierarchy: Global/USA/San Jose/BLD2
+            management_ip_address: 205.1.2.2
+
+    - name: Configure the fabric sites/zones and authentication profile template in Cisco Catalyst Center.
+      cisco.dnac.sda_fabric_sites_zones_workflow_manager:
+        <<: *dnac_login
+        dnac_log: true
+        config_verify: true
+        state: merged
+        config:
+        - fabric_sites:
+          - site_name_hierarchy: "Global/USA/New York"
+            fabric_type: "fabric_site"
+            authentication_profile: "No Authentication"
+            is_pub_sub_enabled: False
+
+          - site_name_hierarchy: "Global/USA/San Jose"
+            fabric_type: "fabric_site"
+            authentication_profile: "No Authentication"
+            is_pub_sub_enabled: False
+    
 
