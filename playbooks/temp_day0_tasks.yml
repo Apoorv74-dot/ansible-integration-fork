@@ -224,14 +224,14 @@
 
           reserve_pool_details:
           - site_name: Global/USA/new york
-            name: APPool_sub_206
+            name: BorderHandoffsub_206
             pool_type: Generic
-            ipv4_global_pool: 206.1.208.0/20
-            ipv4_global_pool_name: APPool_206
+            ipv4_global_pool: 206.1.16.0/20
+            ipv4_global_pool_name: BorderHandoff206
             ipv4_prefix: True
-            ipv4_prefix_length: 22
-            ipv4_subnet: 206.1.208.0
-            ipv4_gateway: 206.1.208.1
+            ipv4_prefix_length: 24
+            ipv4_subnet: 206.1.16.0
+            ipv4_gateway: 206.1.16.1
             ipv4_dns_servers: [100.1.1.10]
             ipv4_dhcp_servers: [100.1.1.10]
           - site_name: Global/USA/san jose
